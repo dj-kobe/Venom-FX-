@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VenomAI — AI-Powered Trading Platform</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.44.0/iconfont/tabler-icons.min.css" />
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <div class="logo">
+      <div class="logo-icon">
+        <i class="ti ti-chart-candle" aria-hidden="true"></i>
+      </div>
+      <span class="logo-text">Venom AI</span>
+      <span class="logo-badge">AI-Powered</span>
+    </div>
+
+    <div class="ticker-strip" id="tickerStrip" aria-label="Live forex rates"></div>
+
+    <div class="topbar-right">
+      <div class="status-indicator">
+        <span class="live-dot"></span>
+        <span class="status-text">Live Market</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN LAYOUT -->
+  <main class="main-grid">
+
+    <!-- LEFT PANEL -->
+    <section class="left-panel" aria-label="Chart upload and settings">
+
+      <!-- Upload Zone -->
+      <div class="panel-section">
+        <p class="section-label">Chart Upload</p>
+        <div class="upload-zone" id="uploadZone" role="button" tabindex="0" aria-label="Upload chart image">
+          <input type="file" id="fileInput" accept="image/*" aria-label="Select chart image file" />
+          <div class="upload-icon">
+            <i class="ti ti-upload" aria-hidden="true"></i>
+          </div>
+          <div class="upload-title">Drop your chart screenshot here</div>
+          <p class="upload-sub">
+            Upload a forex chart image and our AI will analyze patterns,<br />
+            indicators, and suggest your trade direction
+          </p>
+          <span class="upload-btn-label">Browse File</span>
+        </div>
+      </div>
+
+      <!-- Preview Section -->
+      <div class="panel-section" id="previewSection" style="display:none">
+        <p class="section-label">Chart Preview</p>
+        <div class="preview-container">
+          <div class="preview-header">
+            <span class="preview-title">
+              <i class="ti ti-photo" aria-hidden="true"></i>
+              Chart ready for analysis
+            </span>
+            <button class="remove-btn" id="removeBtn" aria-label="Remove uploaded image">
+              <i class="ti ti-x" aria-hidden="true"></i> Remove
+            </button>
+          </div>
+          <img id="previewImg" class="preview-img" alt="Uploaded forex chart" />
+        </div>
+      </div>
+
+      <!-- Pair Selector -->
+      <div class="panel-section pair-selector">
+        <p class="section-label">Currency Pair</p>
+        <div class="pair-grid" id="pairGrid" role="radiogroup" aria-label="Select currency pair">
+          <div class="pair-chip active" data-pair="EUR/USD" role="radio" aria-checked="true" tabindex="0">EUR/USD</div>
+          <div class="pair-chip" data-pair="GBP/USD" role="radio" aria-checked="false" tabindex="0">GBP/USD</div>
+          <div class="pair-chip" data-pair="USD/JPY" role="radio" aria-checked="false" tabindex="0">USD/JPY</div>
+          <div class="pair-chip" data-pair="AUD/USD" role="radio" aria-checked="false" tabindex="0">AUD/USD</div>
+          <div class="pair-chip" data-pair="USD/CHF" role="radio" aria-checked="false" tabindex="0">USD/CHF</div>
+          <div class="pair-chip" data-pair="NZD/USD" role="radio" aria-checked="false" tabindex="0">NZD/USD</div>
+          <div class="pair-chip" data-pair="USD/CAD" role="radio" aria-checked="false" tabindex="0">USD/CAD</div>
+          <div class="pair-chip" data-pair="GBP/JPY" role="radio" aria-checked="false" tabindex="0">GBP/JPY</div>
+        </div>
+
+        <p class="section-label" style="margin-top: 16px;">Timeframe</p>
+        <div class="timeframe-row" id="tfRow" role="radiogroup" aria-label="Select timeframe">
+          <div class="tf-chip" data-tf="M5" role="radio" aria-checked="false" tabindex="0">M5</div>
+          <div class="tf-chip" data-tf="M15" role="radio" aria-checked="false" tabindex="0">M15</div>
+          <div class="tf-chip" data-tf="H1" role="radio" aria-checked="false" tabindex="0">H1</div>
+          <div class="tf-chip active" data-tf="H4" role="radio" aria-checked="true" tabindex="0">H4</div>
+          <div class="tf-chip" data-tf="D1" role="radio" aria-checked="false" tabindex="0">D1</div>
+          <div class="tf-chip" data-tf="W1" role="radio" aria-checked="false" tabindex="0">W1</div>
+        </div>
+      </div>
+
+      <!-- Analyze Button -->
+      <button class="analyze-btn" id="analyzeBtn" disabled aria-label="Analyze chart with AI">
+        <i class="ti ti-cpu" aria-hidden="true"></i>
+        Analyze Chart with AI
+      </button>
+
+    </section>
+
+    <!-- RIGHT PANEL -->
+    <aside class="right-panel" aria-label="AI analysis results">
+      <div class="panel-top">
+        <div class="panel-title">
+          <span class="live-dot"></span>
+          AI Analysis
+        </div>
+        <div class="panel-subtitle" id="analysisSubtitle">Waiting for chart...</div>
+      </div>
+
+      <div class="analysis-panel" id="analysisPanel">
+        <!-- Empty state -->
+        <div class="empty-state" id="emptyState">
+          <div class="empty-icon">
+            <i class="ti ti-brain" aria-hidden="true"></i>
+          </div>
+          <div class="empty-title">Ready to analyze</div>
+          <p class="empty-sub">
+            Upload a chart screenshot, select your currency pair and timeframe,<br />
+            then press Analyze to receive your AI trade signal.
+          </p>
+        </div>
+      </div>
+
+      <footer class="disclaimer" role="contentinfo">
+        <i class="ti ti-alert-triangle" aria-hidden="true"></i>
+        AI analysis is for educational purposes only. Forex trading involves significant risk of loss.
+        Always use proper risk management and consult a licensed financial advisor before trading.
+      </footer>
+    </aside>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
